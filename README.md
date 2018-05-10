@@ -11,6 +11,20 @@ container and scanning it with [Clair](https://github.com/coreos/clair) to check
 for known security vulnerabilities. If we want to, deployments can be prevented
 if a security vulnerability is discovered in the container image.
 
+In addition to the benefits above, I expect to see us address some common
+security issues by using this CloudFormation stack to create all of our
+application pipelines. Doing this through code ensures that we repeat best
+practices when creating resources in AWS. We can promote the good behavior like:
+
+- Environment isolation: The build pipeline for the SSO dashboard can be
+  completely isolated from the Mozillians build pipeline
+- Granular permissions: If we create pipelines manually, we risk issues like
+  forgetting to lock down IAM permissions. We can avoid this by doing it right
+once and repeating that pattern
+- Patching: Security vulnerabilities and be found with Clair and additional
+  security checks can be put in place in other stages in the pipeline and then
+replicated to all ouf our services
+
 ### Required Cloudformation stack parameters
 
 ```
